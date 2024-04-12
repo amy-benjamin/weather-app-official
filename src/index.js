@@ -2,7 +2,16 @@ function displayTemperature(response) {
   let temperatureElement = document.querySelector("#current-temperature");
   let temperature = Math.round(response.data.temperature.current);
   let cityElement = document.querySelector("#current-city");
+  let descriptionElement = document.querySelector("#description");
+  let humidityElement = document.querySelector("#humidity");
+  let windSpeedElement = document.querySelector("#wind-speed");
+
+  console.log(response.data);
+
   cityElement.innerHTML = response.data.city;
+  descriptionElement.innerHTML = response.data.condition.description;
+  humidityElement.innerHTML = `${response.data.temperature.humidity}%`;
+  windSpeedElement.innerHTML = `${response.data.wind.speed}km/h`;
   temperatureElement.innerHTML = temperature;
 }
 
@@ -22,12 +31,12 @@ function formatDate(date) {
   let hours = date.getHours();
   let day = date.getDay();
 
-  if (minutes < 10) {
-    minutes = `0${minutes}`;
-  }
-
   if (hours < 10) {
     hours = `0${hours}`;
+  }
+
+  if (minutes < 10) {
+    minutes = `0${minutes}`;
   }
 
   let days = [
@@ -40,7 +49,7 @@ function formatDate(date) {
     "Saturday",
   ];
 
-  let formattedDay = days[day];
+  let formattedDay = days[date.getDay()];
   return `${formattedDay} ${hours}:${minutes}`;
 }
 
